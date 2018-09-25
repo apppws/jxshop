@@ -1,14 +1,18 @@
 <?php
     // 1 常量
-    define("ROOT",__DIR__."/../");
+    define('ROOT', __DIR__."/../");
+    // var_dump(__DIR__);
     // 2 自动加载
     function autoload($class){
-        $path = str_replace('\\','/',$class);
-        require_once ROOT.$path.'.php';
+        $path = str_replace('\\', '/', $class);
+        // var_dump($path);
+        require(ROOT . $path . '.php');
     }
     spl_autoload_register('autoload');
+    // 4引入函数文件
+    require(ROOT.'libs/function.php');
     // 3 路由
-    $controller = "IndexController";
+    $controller = "\controllers\IndexController";
     $action = "index";
     if(isset($_SERVER['PATH_INFO'])){
         $route = explode('/',$_SERVER['PATH_INFO']);
@@ -17,11 +21,5 @@
     }
     $c = new $controller;
     $c->$action();
-    // 4.视图
-    function view($file,$data=[]){
-        // 压缩
-        if(isset($data))
-        extract($data);
-        include(ROOT.'views/'.$file.'.html');
-    }
+   
 ?>
