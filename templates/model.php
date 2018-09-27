@@ -1,19 +1,8 @@
 namespace models;
-class <?=$mname?>{
-    // 增
-    public function insert(){
-        
-    }
-    // 删除
-    public function delete(){
-
-    }
-    // 改
-    public function edit(){
-
-    }
-    // 查
-    public function search(){
-        
-    }
+class <?=$mname?> extends Model{
+   
+    // 设置这个模型对应的表
+    protected $table = <?=$tableName?>;
+    // 设置允许接收的字段
+    protected $fillable = ['<?=$fillable?>'];
 }

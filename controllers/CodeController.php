@@ -1,5 +1,6 @@
 <?php
 namespace controllers;
+use PDO;
 class CodeController{
 
     // 生成代码
@@ -7,6 +8,26 @@ class CodeController{
 
         // 1 生成代码的表名 先接收
         $tableName = $_GET['name'];
+        // 取出这个表中所有的字段信息
+        $sql = "SHOW FULL FIELDS FROM $tableName";
+        $db = \libs\Db::make();
+        // 预处理
+        $stmt = $db->prepare($sql);
+        // 执行 SQL
+        $stmt->execute();
+        // 取出数据
+        $fields = $stmt->fetchAll( \PDO::FETCH_ASSOC );
+
+        // 收集所有字段的白名单
+        $fillable = [];
+        foreach($fields as $v)
+        {
+            if($v['Field'] == 'id' || $v['Field'] == 'created_at')
+                continue ;
+            $fillable[] = $v['Field'];
+        }
+        $fillable = implode("','", $fillable);
+        $mname = ucfirst($tableName);
         // 2 生成控制器
         $cname = ucfirst($tableName).'Controller';
         /**
@@ -23,7 +44,8 @@ class CodeController{
         /**
          * 加载模板(模型)
          * */
-        $mname = ucfirst($tableName);
+        
+        // var_dump($mname);
          //1.开启缓存区
          ob_start(); 
          // 2.引入这个文件加载到缓存区
@@ -37,6 +59,16 @@ class CodeController{
          * */
         // 生成视图目录 如果有这个目录就不用报错
         @mkdir(ROOT.'views/'.$tableName,0777);
+
+        // 取出表中的字段 
+        $sql = "SHOW FULL FIELDS FROM $tableName";
+        $db = \libs\DB::make();
+        $stmt = $db->prepare($sql);
+        $stmt->execute();
+        // 取数据
+        $filed = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        // var_dump($filed);
+        // exit;
         //1.开启缓存区
         ob_start(); 
         // 2.引入这个文件加载到缓存区
