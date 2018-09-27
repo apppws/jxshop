@@ -1,13 +1,14 @@
 <?php
 namespace controllers;
-use PDO;
-class CodeController{
 
+class CodeController
+{
     // 生成代码
-    public function make(){
-
-        // 1 生成代码的表名 先接收
+    public function make()
+    {
+        // 1. 接收参数（生成代码的表名）
         $tableName = $_GET['name'];
+
         // 取出这个表中所有的字段信息
         $sql = "SHOW FULL FIELDS FROM $tableName";
         $db = \libs\Db::make();
@@ -27,76 +28,53 @@ class CodeController{
             $fillable[] = $v['Field'];
         }
         $fillable = implode("','", $fillable);
-        $mname = ucfirst($tableName);
-        // 2 生成控制器
-        $cname = ucfirst($tableName).'Controller';
-        /**
-         * 加载模板(控制器)
-         * */
-         //1.开启缓存区
-        ob_start(); 
-        // 2.引入这个文件加载到缓存区
-        include(ROOT.'templates/controller.php');
-        // 3 清除缓存
-        $str = ob_get_clean();
-        // 4 取数据 并放到哪个地址
-        file_put_contents(ROOT.'controllers/'.$cname.'.php',"<?php\r\n".$str);
-        /**
-         * 加载模板(模型)
-         * */
-        
-        // var_dump($mname);
-         //1.开启缓存区
-         ob_start(); 
-         // 2.引入这个文件加载到缓存区
-         include(ROOT.'templates/model.php');
-         // 3 清除缓存
-         $str = ob_get_clean();
-         // 4 取数据 并放到哪个地址
-         file_put_contents(ROOT.'models/'.$mname.'.php',"<?php\r\n".$str);
-         /**
-         * 加载模板(视图)
-         * */
-        // 生成视图目录 如果有这个目录就不用报错
-        @mkdir(ROOT.'views/'.$tableName,0777);
 
-        // 取出表中的字段 
-        $sql = "SHOW FULL FIELDS FROM $tableName";
-        $db = \libs\DB::make();
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        // 取数据
-        $filed = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        // var_dump($filed);
-        // exit;
-        //1.开启缓存区
-        ob_start(); 
-        // 2.引入这个文件加载到缓存区
-        include(ROOT.'templates/create.html');
-        // 3 清除缓存
+        $mname = ucfirst($tableName);
+
+        // 2. 生成控制器
+        // 拼出控制名的名字
+        $cname = ucfirst($tableName).'Controller';
+        /*
+        加载模板
+        */
+        ob_start();
+        include(ROOT . 'templates/controller.php');
         $str = ob_get_clean();
-        // 4 取数据 并放到哪个地址
+        file_put_contents(ROOT.'controllers/'.$cname.'.php', "<?php\r\n".$str);
+
+        // 3. 生成模型
+        
+        ob_start();
+        include(ROOT . 'templates/model.php');
+        $str = ob_get_clean();
+        file_put_contents(ROOT.'models/'.$mname.'.php', "<?php\r\n".$str);
+
+        // 4. 生成视图文件
+        // 生成视图目录
+        @mkdir(ROOT . 'views/'.$tableName, 0777);
+
+        // echo '<pre>';
+        // var_dump( $fields );
+
+        // exit;
+
+        // create.html
+        ob_start();
+        include(ROOT . 'templates/create.html');
+        $str = ob_get_clean();
         file_put_contents(ROOT.'views/'.$tableName.'/create.html', $str);
 
-        //1.开启缓存区
-        ob_start(); 
-        // 2.引入这个文件加载到缓存区
-        include(ROOT.'templates/edit.html');
-        // 3 清除缓存
+        // edit.html
+        ob_start();
+        include(ROOT . 'templates/edit.html');
         $str = ob_get_clean();
-        // 4 取数据 并放到哪个地址
         file_put_contents(ROOT.'views/'.$tableName.'/edit.html', $str);
 
-        //1.开启缓存区
-        ob_start(); 
-        // 2.引入这个文件加载到缓存区
-        include(ROOT.'templates/index.html');
-        // 3 清除缓存
+        // index.html
+        ob_start();
+        include(ROOT . 'templates/index.html');
         $str = ob_get_clean();
-        // 4 取数据 并放到哪个地址
         file_put_contents(ROOT.'views/'.$tableName.'/index.html', $str);
+
     }
-
 }
-
-?>

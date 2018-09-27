@@ -7,7 +7,7 @@ class CategoryController{
     // 列表页
     public function index()
     {
-        @$model = new Category;
+        $model = new Category;
         $data = $model->findAll();
         view('category/index', $data);
     }

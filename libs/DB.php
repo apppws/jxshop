@@ -28,4 +28,15 @@ class DB
     {
         return $this->_pdo->prepare($sql);        
     }
+    // 非预处理执行SQL
+    public function exec($sql)
+    {
+        return $this->_pdo->exec($sql);
+    }
+
+    // 获取最新添加的记录的ID
+    public function lastInsertId()
+    {
+        return $this->_pdo->lastInsertId();
+    }
 }

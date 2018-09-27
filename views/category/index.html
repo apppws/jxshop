@@ -14,40 +14,37 @@
     <div style="clear:both"></div>
 </h1>
 
-<!-- 商品列表 -->
-    <div class="list-div" id="listDiv">
-        <table cellpadding="3" cellspacing="1">
-                <tr>
-                                                <th>ID</th>
-                                                <th>分类名称</th>
-                                                <th>上级ID</th>
-                                                <th>所有上级分类的ID</th>
-                                                <th>操作</th>
-                    </tr>
-                    <?php foreach($data as $v): ?>                    <tr>
-                                                <td><?=$v['id']?></td>
-                                                <td><?=$v['cat_name']?></td>
-                                                <td><?=$v['parent_id']?></td>
-                                                <td><?=$v['path']?></td>
-                                                <td>
-                            <a href="/category/edit?id=<?=$v['id']?>">修改</a>
-                            <a onclick="return confirm('确定要删除吗？');" href="/category/delete?id=<?=$v['id']?>">删除</a>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>        </table>
+<div class="list-div" id="listDiv">
+    <table cellpadding="3" cellspacing="1">
+        <tr>
+                        <th>ID</th>
+                        <th>分类名称</th>
+                        <th>上级ID</th>
+                        <th>所有上级分类的ID</th>
+                        <th>操作</th>
+        </tr>
+        <?php foreach($data as $v): ?>        <tr>
+                        <td><?=$v['id']?></td>
+                        <td><?=$v['cat_name']?></td>
+                        <td><?=$v['parent_id']?></td>
+                        <td><?=$v['path']?></td>
+                        <td>
+                <a href="/category/edit?id=<?=$v['id']?>">修改</a>
+                <a onclick="return confirm('确定要删除吗？');" href="/category/delete?id=<?=$v['id']?>">删除</a>
+            </td>
+        </tr>
+        <?php endforeach; ?>    </table>
 
-    <!-- 分页开始 -->
-        <table id="page-table" cellspacing="0">
-            <tr>
-                <td width="80%">&nbsp;</td>
-                <td align="center" nowrap="true">
-                    <?=$page?>                </td>
-            </tr>
-        </table>
-    <!-- 分页结束 -->
-    </div>
+<!-- 分页开始 -->
+    <table id="page-table" cellspacing="0">
+        <tr>
+            <td width="80%">&nbsp;</td>
+            <td align="center" nowrap="true">
+                <?=$page?>            </td>
+        </tr>
+    </table>
+<!-- 分页结束 -->
+</div>
 
-
-<div id="footer">商城后台2016</div>
-</body>
+<?=view('common/footer')?></body>
 </html>
