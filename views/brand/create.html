@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <title>管理中心 - 添加新记录</title>
     <meta name="robots" content="noindex, nofollow">
@@ -7,6 +8,7 @@
     <link href="/Styles/general.css" rel="stylesheet" type="text/css" />
     <link href="/Styles/main.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
     <h1>
         <span class="action-span"><a href="/brand/index">数据列表</a></span>
@@ -17,26 +19,31 @@
     <div class="main-div">
         <form action="/brand/insert" method="post" enctype="multipart/form-data">
             <table width="100%" id="general-table">
-                                <tr>
+                <tr>
                     <td class="label">品牌名称:</td>
                     <td>
-                                                    <input type='text' size="80" name='brand_name'>
-                                                <font color="red">*</font>
+                        <input type='text' size="80" name='brand_name'>
+                        <font color="red">*</font>
                     </td>
                 </tr>
-                                <tr>
+                <tr>
                     <td class="label">LOGO:</td>
                     <td>
-                                                    <input type='text' size="80" name='logo'>
-                                                <font color="red">*</font>
+                        <input class="preview" type='file' name='logo'>
+                        <font color="red">*</font>
                     </td>
                 </tr>
-                            </table>
+            </table>
             <div class="button-div">
                 <input type="submit" value=" 确定 " />
                 <input type="reset" value=" 重置 " />
             </div>
         </form>
     </div>
-    <?=view('common/footer')?></body>
+    <?=view('common/footer')?>
+</body>
+
 </html>
+
+<script src="/Js/jquery.min.js"></script>
+<script src="/Js/img_preview.js"></script>
