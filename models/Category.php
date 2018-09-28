@@ -16,4 +16,9 @@ class Category extends Model
             'where' => "parent_id=$parent_id"
         ]);
     }
+    // 添加和修改之前 的函数
+    public function _before_write(){
+        
+    }
+
 }

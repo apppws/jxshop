@@ -27,7 +27,7 @@ use PDO;
 
     public function __construct()
     {
-        $this->_db = \libs\Db::make();
+        $this->_db = \libs\DB::make();
     }
 
     /**

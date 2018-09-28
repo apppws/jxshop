@@ -9,6 +9,7 @@ class BrandController{
     {
         $model = new Brand;
         $data = $model->findAll();
+        // var_dump($data);
         view('brand/index', $data);
     }
 
