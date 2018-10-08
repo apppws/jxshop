@@ -12,6 +12,7 @@ class DB
         $this->_pdo = new \PDO('mysql:host=127.0.0.1;dbname=jxshop', 'root', '');
         // 设置编码
         $this->_pdo->exec('SET NAMES utf8');
+        $this->_pdo->setAttribute(\PDO::ATTR_ERRMODE,\PDO::ERRMODE_SILENT);
     }
 
     // 返回唯一的对象
