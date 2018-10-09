@@ -7,6 +7,10 @@ class BaseController{
         if(!isset($_SESSION['id'])){
             redirect('/login/login');
         }
+        // 判断是否是超级管理员
+        if(isset($_SESSION['root'])){
+            return ;
+        }
         // 获取要访问的路径
         $path = isset($_SERVER['PATH_INFO']) ? trim($_SERVER['PATH_INFO'],'/') : 'index/index';
         //设置白名单 

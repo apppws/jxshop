@@ -63,7 +63,19 @@ class Admin extends Model
         if ($info) {
             $_SESSION['id'] = $info['id'];
             $_SESSION['username'] = $info['username'];
-            $_SESSION['url_path'] = $this->getUalPath($_SESSION['id']);
+            
+            // 超级管理员的处理
+            $stmt = $this->_db->prepare('SELECT COUNT(*) FROM admin_role WHERE role_id=1 AND admin_id=?');
+            $stmt->execute([$_SESSION['id']]);
+            $f =$stmt->fetch(\PDO::FETCH_COLUMN);
+            // 判断如果这个值大于0 
+            if($f>0){
+                $_SESSION['root'] = true;
+            }
+            else{
+                $_SESSION['url_path'] = $this->getUalPath($_SESSION['id']);
+            }
+           
             // var_dump($_SESSION['url_path']);
             // exit;
         } else {
