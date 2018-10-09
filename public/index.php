@@ -1,6 +1,10 @@
 <?php
     // 1 常量
     define('ROOT', __DIR__."/../");
+    // 设置时区
+    date_default_timezone_get("PRC");
+
+    session_start();
     // var_dump(__DIR__);
     // 2 自动加载
     function autoload($class){

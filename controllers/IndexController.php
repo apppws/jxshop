@@ -1,6 +1,6 @@
 <?php
 namespace controllers;
-class IndexController{
+class IndexController extends BaseController {
     public function index(){
         view('index/index');
     }

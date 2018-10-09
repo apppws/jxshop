@@ -3,19 +3,25 @@ namespace controllers;
 
 use models\Admin;
 
-class AdminController{
+class AdminController extends BaseController{
     // 列表页
     public function index()
     {
         $model = new Admin;
-        $data = $model->findAll();
+        $data = $model->findAll([
+            'fields'=>'a.*,GROUP_CONCAT(c.role_name) pri_list',
+            'join'=>'a left join admin_role b on a.id=b.admin_id  left join role c on b.role_id=c.id ',
+            'groupby'=>'group by a.id'
+        ]);
         view('admin/index', $data);
     }
 
     // 显示添加的表单
     public function create()
     {
-        view('admin/create');
+        $primodel = new \models\Role;
+        $data = $primodel->findAll();
+        view('admin/create',$data);
     }
 
     // 处理添加表单

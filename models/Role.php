@@ -10,6 +10,15 @@ class Role extends Model
 
     // 添加修改完之后 
     protected function _after_write(){
+
+        $priId = isset($_GET['id'])?$_GET['id']:$this->data['id'];
+        // var_dump($priId);
+        // exit;
+        $stmt = $this->_db->prepare("DELETE FROM role_privlege WHERE role_id=?");
+        $stmt->execute([
+            $priId
+        ]);
+        // exit;
         // 预处理 
         $stmt = $this->_db->prepare("INSERT INTO role_privlege(pri_id,role_id) VALUES(?,?)");
         // var_dump($stmt);
@@ -19,7 +28,7 @@ class Role extends Model
             // 执行 
             $stmt->execute([
                 $v,
-                $this->data['id']
+                $priId
             ]);
         }
     }
